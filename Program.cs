@@ -1,18 +1,17 @@
 ﻿using Blog.Models;
 using Blog.Repositories;
-using Dapper;
 using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System;
-
+// Criei a variavel connection dentro do metodo Main
 namespace Blog
 {
     class Program
     {
         static void Main(string[] args)
         {
-            //Configuration connection
+            //CONFIGURATION CONNECTION
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                 .AddJsonFile(Path.Combine("Configurations", "appsettings.Development.json"), optional: true, reloadOnChange: true)
@@ -20,26 +19,21 @@ namespace Blog
 
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-            //if (string.IsNullOrEmpty(connectionString))
-            //{
-            //    Console.WriteLine("Connection string not found");
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Connection String: " + connectionString);
-            //}
+            using var connection = new SqlConnection(connectionString);
+            connection.Open();
 
             //METHOD
-            ReadUsers();
+            ReadUsers(connection);
             //ReadUser(connectionString);
             //CreateUser(connectionString);
             //UpdateUser(connectionString);
             //DeleteUser(connectionString);
+            connection.Close();
         }
 
-        public static void ReadUsers(SqlConnection connectionString)
+        public static void ReadUsers(SqlConnection connection)
         {
-            var repository = new UserRepository(connectionString);
+            var repository = new UserRepository(connection);
             var users = repository.Get();
 
             foreach (var user in users)

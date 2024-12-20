@@ -11,6 +11,7 @@ namespace Blog.Repositories
 
         public UserRepository(SqlConnection connection)
             => _connection = connection;
+
         public IEnumerable<User> Get()
             => _connection.GetAll<User>();
 
