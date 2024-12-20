@@ -24,6 +24,7 @@ namespace Blog
 
             //METHOD
             ReadUsers(connection);
+            ReadRoles(connection);
             //ReadUser(connectionString);
             //CreateUser(connectionString);
             //UpdateUser(connectionString);
@@ -39,6 +40,16 @@ namespace Blog
             foreach (var user in users)
             {
                 Console.WriteLine(user.Name);
+            }
+        }
+        public static void ReadRoles(SqlConnection connection)
+        {
+            var repository = new RoleRepository(connection);
+            var roles = repository.Get();
+
+            foreach (var role in roles)
+            {
+                Console.WriteLine(role.Name);
             }
         }
 
