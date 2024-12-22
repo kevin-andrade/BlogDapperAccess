@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Blog.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blog.Models
 {
     [Table("[User]")]
-    public class User
+    public class User : IRepository
     {
         public int Id { get; set; }
         public string Name { get; set; }
