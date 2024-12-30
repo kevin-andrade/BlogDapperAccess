@@ -9,7 +9,7 @@ namespace Blog.Repositories
 {
     public class Repository<TModel> where TModel : class, IRepository
     {
-        private readonly SqlConnection _connection;
+        protected readonly SqlConnection _connection;
 
         public Repository(SqlConnection connection)
             => _connection = connection;
@@ -21,7 +21,10 @@ namespace Blog.Repositories
             => _connection.Get<TModel>(id);
 
         public void Create(TModel model)
-            => _connection.Insert(model);
+        {
+            _connection.Insert(model);
+            Console.WriteLine("User created successfully!");
+        }
 
         public void Update(TModel model)
         {
@@ -43,6 +46,5 @@ namespace Blog.Repositories
             var item = _connection.Get<TModel>(id);
             _connection.Delete<TModel>(item);
         }
-        // ESTOU NAS INTEFACES DO METODO UPDATE E DELETE, CRIEI UMA INTEFACE IRepository com o atributo Id
     }
 }
