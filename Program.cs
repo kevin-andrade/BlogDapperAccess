@@ -4,7 +4,7 @@ using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System;
-// Criei a variavel connection dentro do metodo Main
+
 namespace Blog
 {
     class Program
@@ -22,63 +22,101 @@ namespace Blog
             using var connection = new SqlConnection(connectionString);
             connection.Open();
 
-            //METHOD
-            ReadUsers(connection);
-            ReadRoles(connection);
-            //ReadUser(connectionString);
-            //CreateUser(connectionString);
+            //ReadUsers(connection);
+            //ReadRoles(connection);
+            ReadUsersWithRoles(connection);
+            //ReadCategory(connection);
+            //ReadTag(connection);
+            //ReadItemId(connection);
+            //CreateUser(connection);
+
             //UpdateUser(connectionString);
             //DeleteUser(connectionString);
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey();
             connection.Close();
         }
 
         public static void ReadUsers(SqlConnection connection)
         {
-            var repository = new UserRepository(connection);
-            var users = repository.Get();
+            var repository = new Repository<User>(connection);
+            var items = repository.Get();
 
-            foreach (var user in users)
+            foreach (var item in items)
             {
-                Console.WriteLine(user.Name);
+                Console.WriteLine(item.Name);
+                foreach (var role in item.Roles)
+                {
+                    Console.WriteLine(role.Name);
+                }
             }
         }
+
         public static void ReadRoles(SqlConnection connection)
         {
-            var repository = new RoleRepository(connection);
-            var roles = repository.Get();
+            var repository = new Repository<Role>(connection);
+            var items = repository.Get();
 
-            foreach (var role in roles)
+            foreach (var item in items)
             {
-                Console.WriteLine(role.Name);
+                Console.WriteLine(item.Name);
             }
         }
 
-        public static void ReadUser(string connectionString)
+        public static void ReadCategory(SqlConnection connection)
         {
-            using (var connection = new SqlConnection(connectionString))
+            var repository = new Repository<Category>(connection);
+            var items = repository.Get();
+
+            foreach (var item in items)
+            { Console.WriteLine(item.Name); }
+        }
+
+        public static void ReadTag(SqlConnection connection)
+        {
+            var repository = new Repository<Tag>(connection);
+            var items = repository.Get();
+
+            foreach (var item in items)
+            { Console.WriteLine(item.Name); }
+        }
+
+        public static void ReadItemId(SqlConnection connection)
+        {
+            var repository = new Repository<User>(connection);
+            var item = repository.Get(1);
+            Console.WriteLine(item.Name);
+        }
+
+        public static void ReadUsersWithRoles(SqlConnection connection)
+        {
+            var repository = new UserRepository(connection);
+            var items = repository.GetWithRoles();
+
+            foreach (var item in items)
             {
-                var user = connection.Get<User>(2);
-                Console.WriteLine(user.Name);
+                Console.WriteLine($"{item.Name}");
+                foreach (var role in item.Roles)
+                {
+                    Console.WriteLine($"- {role.Name}");
+                }
             }
         }
 
-        public static void CreateUser(string connectionString)
+        public static void CreateUser(SqlConnection connection)
         {
             var user = new User()
             {
-                Name = "Keven Andrade",
-                Email = "keven@andrade.io",
+                Name = "Wesley OF",
+                Email = "wesley@of.io",
                 PasswordHash = "HASH",
-                Bio = "Developer CSharp",
+                Bio = "Influencer Digital",
                 Image = "https://",
-                Slug = "keven-andrade"
+                Slug = "wesley-of"
             };
 
-            using (var connection = new SqlConnection(connectionString))
-            {
-                connection.Insert(user);
-                Console.WriteLine("User created successfully!");
-            }
+            var repository = new Repository<User>(connection);
+            repository.Create(user);
         }
 
         public static void UpdateUser(string connectionString)
