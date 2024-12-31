@@ -1,5 +1,6 @@
 ﻿using Blog.Models;
 using Blog.Repositories;
+using Blog.UI;
 using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,7 @@ namespace Blog
 
             //ReadUsers(connection);
             //ReadRoles(connection);
-            ReadUsersWithRoles(connection);
+            //ReadUsersWithRoles(connection);
             //ReadCategory(connection);
             //ReadTag(connection);
             //ReadItemId(connection);
@@ -32,8 +33,14 @@ namespace Blog
 
             //UpdateUser(connectionString);
             //DeleteUser(connectionString);
-            Console.WriteLine("Press any key to exit...");
-            Console.ReadKey();
+
+            ScreenManager.DrawScreen("Add a New User");
+            var user = ScreenManager.GetUserDate();
+
+            CreateUser(connection, user);
+
+            ScreenManager.Pause();
+            
             connection.Close();
         }
 
@@ -103,19 +110,9 @@ namespace Blog
             }
         }
 
-        public static void CreateUser(SqlConnection connection)
+        public static void CreateUser(SqlConnection connection, User user)
         {
-            var user = new User()
-            {
-                Name = "Wesley OF",
-                Email = "wesley@of.io",
-                PasswordHash = "HASH",
-                Bio = "Influencer Digital",
-                Image = "https://",
-                Slug = "wesley-of"
-            };
-
-            var repository = new Repository<User>(connection);
+            var repository = new UserRepository(connection);
             repository.Create(user);
         }
 
