@@ -1,10 +1,10 @@
 ﻿using Blog.Models;
 using Blog.Repositories;
+using Blog.Repositories.Interfaces;
 using Blog.UI;
 using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using System;
 
 namespace Blog
 {
@@ -36,11 +36,14 @@ namespace Blog
 
             ScreenManager.DrawScreen("Add a New User");
             var user = ScreenManager.GetUserDate();
+            CreateEntity<User>(connection, user);
 
-            CreateUser(connection, user);
+            ScreenManager.DrawScreen("Add a New Role");
+            var role = ScreenManager.GetRoleDate();
+            CreateEntity<Role>(connection, role);
 
             ScreenManager.Pause();
-            
+
             connection.Close();
         }
 
@@ -110,10 +113,10 @@ namespace Blog
             }
         }
 
-        public static void CreateUser(SqlConnection connection, User user)
+        public static void CreateEntity<TModel>(SqlConnection connection, TModel model) where TModel : class, IRepository
         {
-            var repository = new UserRepository(connection);
-            repository.Create(user);
+            var repository = new Repository<TModel>(connection);
+            repository.Create(model);
         }
 
         public static void UpdateUser(string connectionString)
