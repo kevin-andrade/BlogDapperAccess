@@ -37,10 +37,13 @@ namespace Blog
             ScreenManager.DrawScreen("Add a New User");
             var user = ScreenManager.GetUserDate();
             CreateEntity<User>(connection, user);
+            ScreenManager.AddMessage("User successfully registered!");
 
             ScreenManager.DrawScreen("Add a New Role");
             var role = ScreenManager.GetRoleDate();
             CreateEntity<Role>(connection, role);
+            ScreenManager.AddMessage("Role successfully registered!");
+
 
             ScreenManager.Pause();
 

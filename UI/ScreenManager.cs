@@ -53,5 +53,20 @@ namespace Blog.UI
                 Slug = slug
             };
         }
+
+        public static Role GetRoleDate()
+        {
+            ScreenManager.AddMessage("Enter role data:");
+            Console.Write("Name: ");
+            var name = Console.ReadLine();
+            Console.Write("Slug: ");
+            var slug = Console.ReadLine();
+
+            return new Role()
+            {
+                Name = name,
+                Slug = slug
+            };
+        }
     }
 }
