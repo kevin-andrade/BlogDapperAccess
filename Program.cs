@@ -41,12 +41,27 @@ namespace Blog
 
             //ScreenManager.DrawScreen("Add a New Role");
             //var role = ScreenManager.GetRoleDate();
-            //CreateEntity<Role>(connection, role);
+            //CreateEntity(connection, role);
             //ScreenManager.AddMessage("Role successfully registered!");
 
-            var userRole = ScreenManager.GetRoleLinkUserData();
-            var userRoleRepository = new JoinRepository<int, int, UserRole>(connection, "UserRole", "UserId", "RoleId");
-            userRoleRepository.CreateRelation(userRole.UserId, userRole.RoleId);
+            //ScreenManager.DrawScreen("Add a New Category");
+            //var category = ScreenManager.GetCategoryData();
+            //CreateEntity<Category>(connection, category);
+            //ScreenManager.AddMessage("Category successfully registered!");
+
+            //ScreenManager.DrawScreen("Add a New Category");
+            //var tag = ScreenManager.GetTagData();
+            //CreateEntity<Tag>(connection, tag);
+            //ScreenManager.AddMessage("Tag successfully registered!");
+
+            ScreenManager.DrawScreen("Add a New Post");
+            var post = ScreenManager.GetPostData();
+            CreateEntity<Post>(connection, post);
+            ScreenManager.AddMessage("Post successfully registered!");
+
+            //var userRole = ScreenManager.GetRoleLinkUserData();
+            //var userRoleRepository = new JoinRepository<int, int, UserRole>(connection, "UserRole", "UserId", "RoleId");
+            //userRoleRepository.CreateRelation(userRole.UserId, userRole.RoleId);
 
             //var relation = userRoleRepository.GetRelation(1, 2);
             //if (relation != null)

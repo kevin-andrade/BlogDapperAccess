@@ -83,6 +83,51 @@ namespace Blog.UI
             };
         }
 
+        public static Category GetCategoryData()
+        {
+            ScreenManager.AddMessage("Enter role data:");
+            Console.Write("Name: ");
+            var name = Console.ReadLine();
+            Console.Write("Slug: ");
+            var slug = Console.ReadLine();
+
+            return new Category()
+            {
+                Name = name,
+                Slug = slug
+            };
+        }
+
+        public static Tag GetTagData()
+        {
+            ScreenManager.AddMessage("Enter tag data:");
+            Console.Write("Name: ");
+            var name = Console.ReadLine();
+            Console.Write("Slug: ");
+            var slug = Console.ReadLine();
+
+            return new Tag()
+            {
+                Name = name,
+                Slug = slug
+            };
+        }
+
+        public static Post GetPostData()
+        {
+            AddMessage("Enter post data:");
+            Console.Write("Name: ");
+            var name = Console.ReadLine();
+            Console.Write("Category ID: ");
+            var categoryId = int.Parse(Console.ReadLine());
+
+            return new Post()
+            {
+                Name = name,
+                CategoryId = categoryId
+            };
+        }
+
         public static UserRole GetRoleLinkUserData()
         {
             AddMessage($"Link Role to User");
