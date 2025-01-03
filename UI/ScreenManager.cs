@@ -1,6 +1,6 @@
 using Blog.Models;
+using Blog.Repositories;
 using System;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Blog.UI
 {
@@ -25,6 +25,20 @@ namespace Blog.UI
             Console.WriteLine();
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
+        }
+
+        public static int GetIdModel<TModel>(string modelName) where TModel : class
+        {
+            while (true)
+            {
+                Console.Write($"Enter {modelName} ID: ");
+                var input = Console.ReadLine();
+
+                if (int.TryParse(input, out int id) && id > 0)
+                    return id;
+
+                Console.WriteLine("Invalid input. Please enter a valid positive integer.");
+            }
         }
 
         public static User GetUserDate()
@@ -67,6 +81,16 @@ namespace Blog.UI
                 Name = name,
                 Slug = slug
             };
+        }
+
+        public static UserRole GetRoleLinkUserData()
+        {
+            AddMessage($"Link Role to User");
+
+            int userId = GetIdModel<User>("Role");
+            int roleId = GetIdModel<Role>("User");
+
+            return new UserRole() { UserId = userId, RoleId = roleId };
         }
     }
 }

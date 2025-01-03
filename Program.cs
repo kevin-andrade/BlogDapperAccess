@@ -34,16 +34,23 @@ namespace Blog
             //UpdateUser(connectionString);
             //DeleteUser(connectionString);
 
-            ScreenManager.DrawScreen("Add a New User");
-            var user = ScreenManager.GetUserDate();
-            CreateEntity<User>(connection, user);
-            ScreenManager.AddMessage("User successfully registered!");
+            //ScreenManager.DrawScreen("Add a New User");
+            //var user = ScreenManager.GetUserDate();
+            //CreateEntity<User>(connection, user);
+            //ScreenManager.AddMessage("User successfully registered!");
 
-            ScreenManager.DrawScreen("Add a New Role");
-            var role = ScreenManager.GetRoleDate();
-            CreateEntity<Role>(connection, role);
-            ScreenManager.AddMessage("Role successfully registered!");
+            //ScreenManager.DrawScreen("Add a New Role");
+            //var role = ScreenManager.GetRoleDate();
+            //CreateEntity<Role>(connection, role);
+            //ScreenManager.AddMessage("Role successfully registered!");
 
+            var userRole = ScreenManager.GetRoleLinkUserData();
+            var userRoleRepository = new JoinRepository<int, int, UserRole>(connection, "UserRole", "UserId", "RoleId");
+            userRoleRepository.CreateRelation(userRole.UserId, userRole.RoleId);
+
+            //var relation = userRoleRepository.GetRelation(1, 2);
+            //if (relation != null)
+            //    Console.WriteLine($"UserId: {relation.UserId}, RoleId: {relation.RoleId}");
 
             ScreenManager.Pause();
 

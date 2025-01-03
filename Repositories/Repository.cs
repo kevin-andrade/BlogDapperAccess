@@ -23,7 +23,7 @@ namespace Blog.Repositories
         public void Create(TModel model)
         {
             _connection.Insert(model);
-            Console.WriteLine("User created successfully!");
+            Console.WriteLine($"Created successfully!");
         }
 
         public void Update(TModel model)
