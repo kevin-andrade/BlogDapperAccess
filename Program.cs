@@ -54,10 +54,10 @@ namespace Blog
             //CreateEntity<Tag>(connection, tag);
             //ScreenManager.AddMessage("Tag successfully registered!");
 
-            ScreenManager.DrawScreen("Add a New Post");
-            var post = ScreenManager.GetPostData();
-            CreateEntity<Post>(connection, post);
-            ScreenManager.AddMessage("Post successfully registered!");
+            //ScreenManager.DrawScreen("Add a New Post");
+            //var post = ScreenManager.GetPostData();
+            //CreateEntity<Post>(connection, post);
+            //ScreenManager.AddMessage("Post successfully registered!");
 
             //var userRole = ScreenManager.GetRoleLinkUserData();
             //var userRoleRepository = new JoinRepository<int, int, UserRole>(connection, "UserRole", "UserId", "RoleId");
@@ -66,6 +66,10 @@ namespace Blog
             //var relation = userRoleRepository.GetRelation(1, 2);
             //if (relation != null)
             //    Console.WriteLine($"UserId: {relation.UserId}, RoleId: {relation.RoleId}");
+
+            var postTag = ScreenManager.GetPostLinkTagData();
+            var postTagRepository = new JoinRepository<int, int, PostTag>(connection, "PostTag", "PostId", "TagId");
+            postTagRepository.CreateRelation(postTag.PostId, postTag.TagId);
 
             ScreenManager.Pause();
 

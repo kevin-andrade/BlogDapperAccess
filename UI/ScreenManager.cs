@@ -116,15 +116,32 @@ namespace Blog.UI
         public static Post GetPostData()
         {
             AddMessage("Enter post data:");
-            Console.Write("Name: ");
-            var name = Console.ReadLine();
+            Console.Write("Author ID: ");
+            var authorId = int.Parse(Console.ReadLine());
             Console.Write("Category ID: ");
             var categoryId = int.Parse(Console.ReadLine());
+            Console.Write("Title: ");
+            var title = Console.ReadLine();
+            Console.Write("Summary: ");
+            var summary = Console.ReadLine();
+            Console.Write("Body: ");
+            var body = Console.ReadLine();
+            Console.Write("Slug: ");
+            var slug = Console.ReadLine();
+
+            var createDate = DateTime.Now;
+            var lastUpdateDate = DateTime.Now;
 
             return new Post()
             {
-                Name = name,
-                CategoryId = categoryId
+                AuthorId = authorId,
+                CategoryId = categoryId,
+                Title = title,
+                Summary = summary,
+                Body = body,
+                Slug = slug,
+                CreateDate = createDate,
+                LastUpdateDate = lastUpdateDate
             };
         }
 
@@ -136,6 +153,16 @@ namespace Blog.UI
             int roleId = GetIdModel<Role>("User");
 
             return new UserRole() { UserId = userId, RoleId = roleId };
+        }
+
+        public static PostTag GetPostLinkTagData()
+        {
+            AddMessage($"Link Post to Tag");
+
+            int postId = GetIdModel<Post>("Post");
+            int tagId = GetIdModel<Tag>("Tag");
+
+            return new PostTag() { PostId = postId, TagId = tagId };
         }
     }
 }
