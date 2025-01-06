@@ -1,4 +1,5 @@
-﻿using Blog.Repositories.Interfaces;
+﻿using Blog.Attributes;
+using Blog.Repositories.Interfaces;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blog.Models
@@ -6,6 +7,7 @@ namespace Blog.Models
     [Table("[Post]")]
     public class Post : IRepository
     {
+        [IgnoreProperty]
         public int Id { get; set; }
 
         public int CategoryId { get; set; }

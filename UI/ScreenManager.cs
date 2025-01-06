@@ -1,3 +1,4 @@
+using Blog.Attributes;
 using Blog.Models;
 using Blog.Repositories;
 using System;
@@ -40,6 +41,49 @@ namespace Blog.UI
                 Console.WriteLine("Invalid input. Please enter a valid positive integer.");
             }
         }
+
+        public static T GetData<T>()
+        {
+            var type = typeof(T);
+            var model = Activator.CreateInstance<T>();
+
+            Console.WriteLine($"Enter data for {type.Name}:");
+
+            foreach (var prop in type.GetProperties())
+            {
+                // Ignorar propriedades com o atributo IgnoreProperty
+                if (Attribute.IsDefined(prop, typeof(IgnorePropertyAttribute)))
+                    continue;
+
+                if (prop.CanWrite)
+                {
+                    Console.Write($"{prop.Name}: ");
+                    var value = Console.ReadLine();
+
+                    if (prop.PropertyType == typeof(string))
+                    {
+                        prop.SetValue(model, value);
+                    }
+                    else if (prop.PropertyType == typeof(int))
+                    {
+                        if (int.TryParse(value, out var intValue))
+                        {
+                            prop.SetValue(model, intValue);
+                        }
+                    }
+                    else if (prop.PropertyType == typeof(DateTime))
+                    {
+                        if (DateTime.TryParse(value, out var dateValue))
+                        {
+                            prop.SetValue(model, dateValue);
+                        }
+                    }
+                }
+            }
+
+            return model;
+        }
+
 
         public static User GetUserDate()
         {

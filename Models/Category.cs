@@ -1,4 +1,5 @@
-﻿using Blog.Repositories.Interfaces;
+﻿using Blog.Attributes;
+using Blog.Repositories.Interfaces;
 using Dapper.Contrib.Extensions;
 using System;
 
@@ -9,7 +10,7 @@ namespace Blog.Models
     {
         public Category()
                 => Posts = new List<Post>();
-
+        [IgnoreProperty]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Slug { get; set; }
