@@ -25,7 +25,7 @@ namespace Blog
 
             //ReadUsers(connection);
             //ReadRoles(connection);
-            //ReadUsersWithRoles(connection);
+            ReadUsersWithRoles(connection);
             //ReadCategory(connection);
             //ReadTag(connection);
             //ReadItemId(connection);
@@ -34,42 +34,42 @@ namespace Blog
             //UpdateUser(connectionString);
             //DeleteUser(connectionString);
 
-            ScreenManager.DrawScreen("Add a New User");
-            var user = ScreenManager.GetData<User>();
-            CreateEntity<User>(connection, user);
-            ScreenManager.AddMessage("User successfully registered!");
+            //ScreenManager.DrawScreen("Add a New User");
+            //var user = ScreenManager.GetData<User>();
+            //CreateEntity<User>(connection, user);
+            //ScreenManager.AddMessage("User successfully registered!");
 
-            ScreenManager.DrawScreen("Add a New Role");
-            var role = ScreenManager.GetData<Role>();
-            CreateEntity<Role>(connection, role);
-            ScreenManager.AddMessage("Role successfully registered!");
+            //ScreenManager.DrawScreen("Add a New Role");
+            //var role = ScreenManager.GetData<Role>();
+            //CreateEntity<Role>(connection, role);
+            //ScreenManager.AddMessage("Role successfully registered!");
 
-            ScreenManager.DrawScreen("Add a New Category");
-            var category = ScreenManager.GetData<Category>();
-            CreateEntity<Category>(connection, category);
-            ScreenManager.AddMessage("Category successfully registered!");
+            //ScreenManager.DrawScreen("Add a New Category");
+            //var category = ScreenManager.GetData<Category>();
+            //CreateEntity<Category>(connection, category);
+            //ScreenManager.AddMessage("Category successfully registered!");
 
-            ScreenManager.DrawScreen("Add a New Tag");
-            var tag = ScreenManager.GetData<Tag>();
-            CreateEntity<Tag>(connection, tag);
-            ScreenManager.AddMessage("Tag successfully registered!");
+            //ScreenManager.DrawScreen("Add a New Tag");
+            //var tag = ScreenManager.GetData<Tag>();
+            //CreateEntity<Tag>(connection, tag);
+            //ScreenManager.AddMessage("Tag successfully registered!");
 
-            ScreenManager.DrawScreen("Add a New Post");
-            var post = ScreenManager.GetData<Post>();
-            CreateEntity<Post>(connection, post);
-            ScreenManager.AddMessage("Post successfully registered!");
+            //ScreenManager.DrawScreen("Add a New Post");
+            //var post = ScreenManager.GetData<Post>();
+            //CreateEntity<Post>(connection, post);
+            //ScreenManager.AddMessage("Post successfully registered!");
 
-            var userRole = ScreenManager.GetRoleLinkUserData();
-            var userRoleRepository = new JoinRepository<int, int, UserRole>(connection, "UserRole", "UserId", "RoleId");
-            userRoleRepository.CreateRelation(userRole.UserId, userRole.RoleId);
+            //var userRole = ScreenManager.GetRoleLinkUserData();
+            //var userRoleRepository = new JoinRepository<int, int, UserRole>(connection, "UserRole", "UserId", "RoleId");
+            //userRoleRepository.CreateRelation(userRole.UserId, userRole.RoleId);
 
-            var relation = userRoleRepository.GetRelation(1, 2);
-            if (relation != null)
-                Console.WriteLine($"UserId: {relation.UserId}, RoleId: {relation.RoleId}");
+            //var relation = userRoleRepository.GetRelation(1, 2);
+            //if (relation != null)
+            //    Console.WriteLine($"UserId: {relation.UserId}, RoleId: {relation.RoleId}");
 
-            var postTag = ScreenManager.GetPostLinkTagData();
-            var postTagRepository = new JoinRepository<int, int, PostTag>(connection, "PostTag", "PostId", "TagId");
-            postTagRepository.CreateRelation(postTag.PostId, postTag.TagId);
+            //var postTag = ScreenManager.GetPostLinkTagData();
+            //var postTagRepository = new JoinRepository<int, int, PostTag>(connection, "PostTag", "PostId", "TagId");
+            //postTagRepository.CreateRelation(postTag.PostId, postTag.TagId);
 
             ScreenManager.Pause();
 
@@ -88,6 +88,20 @@ namespace Blog
                 {
                     Console.WriteLine(role.Name);
                 }
+            }
+        }
+        public static void ReadUsersWithRoles(SqlConnection connection)
+        {
+            var repository = new UserRepository(connection);
+            var items = repository.GetWithRoles();
+
+            foreach (var item in items)
+            {
+                string roles = item.Roles.Any()
+                    ? $"Roles: {string.Join(", ", item.Roles.Select(role => role.Name))}"
+                    : "Roles: No role assigned";
+
+                Console.WriteLine($"{item.Name} | {item.Email} | {roles}");
             }
         }
 
@@ -125,21 +139,6 @@ namespace Blog
             var repository = new Repository<User>(connection);
             var item = repository.Get(1);
             Console.WriteLine(item.Name);
-        }
-
-        public static void ReadUsersWithRoles(SqlConnection connection)
-        {
-            var repository = new UserRepository(connection);
-            var items = repository.GetWithRoles();
-
-            foreach (var item in items)
-            {
-                Console.WriteLine($"{item.Name}");
-                foreach (var role in item.Roles)
-                {
-                    Console.WriteLine($"- {role.Name}");
-                }
-            }
         }
 
         public static void CreateEntity<TModel>(SqlConnection connection, TModel model) where TModel : class, IRepository
