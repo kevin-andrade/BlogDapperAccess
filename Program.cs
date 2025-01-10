@@ -25,8 +25,10 @@ namespace Blog
 
             //ReadUsers(connection);
             //ReadRoles(connection);
-            ReadUsersWithRoles(connection);
+            //ReadUsersWithRoles(connection);
             //ReadCategory(connection);
+            //ReadCategoryWithPostsCount(connection);
+            ReadTagsWithPostCount(connection);
             //ReadTag(connection);
             //ReadItemId(connection);
             //CreateUser(connection);
@@ -113,6 +115,28 @@ namespace Blog
             foreach (var item in items)
             {
                 Console.WriteLine(item.Name);
+            }
+        }
+
+        public static void ReadCategoryWithPostsCount(SqlConnection connection)
+        {
+            var repository = new CategoryRepository(connection);
+            var items = repository.GetCategoryWithPostCount();
+
+            foreach (var item in items)
+            {
+                Console.WriteLine($"{item.Name} | {item.PostCount}");
+            }
+        }
+
+        public static void ReadTagsWithPostCount(SqlConnection connection)
+        {
+            var repository = new TagRepository(connection);
+            var tags = repository.GetTagsWithPostCount();
+
+            foreach (var tag in tags)
+            {
+                Console.WriteLine($"{tag.Name} | Post Count: {tag.PostCount}");
             }
         }
 

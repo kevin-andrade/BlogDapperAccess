@@ -16,5 +16,6 @@ namespace Blog.Models
         public string Slug { get; set; }
         [Write(false)]
         public List<Post> Posts { get; set; }
+        public int PostCount { get; set; }
     }
 }
