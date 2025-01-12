@@ -28,7 +28,9 @@ namespace Blog
             //ReadUsersWithRoles(connection);
             //ReadCategory(connection);
             //ReadCategoryWithPostsCount(connection);
-            ReadTagsWithPostCount(connection);
+            //ReadTagsWithPostCount(connection);
+            var categoryId = ScreenManager.GetIdModel<Category>("Category");
+            ReadCategoryWithPosts(connection, categoryId);
             //ReadTag(connection);
             //ReadItemId(connection);
             //CreateUser(connection);
@@ -126,6 +128,38 @@ namespace Blog
             foreach (var item in items)
             {
                 Console.WriteLine($"{item.Name} | {item.PostCount}");
+            }
+        }
+
+        public static void ReadCategoryWithPosts(SqlConnection connection, int categoryId)
+        {
+            var repository = new CategoryRepository(connection);
+            var items = repository.GetCategoryWithPosts(categoryId);
+
+            if (items == null)
+            {
+                Console.WriteLine($"Category with ID {categoryId} not found.");
+                return;
+            }
+
+            Console.WriteLine($"Category: {items.Name}");
+
+            if (!items.Posts.Any())
+            {
+                Console.WriteLine("No posts found for this category.");
+                return;
+            }
+
+            Console.WriteLine("Posts:");
+            foreach (var item in items.Posts)
+            {
+                Console.WriteLine($"- Title: {item.Title}");
+                Console.WriteLine($"  Summary: {item.Summary}");
+                Console.WriteLine($"  Slug: {item.Slug}");
+                Console.WriteLine($"  Created On: {item.CreateDate}");
+                Console.WriteLine($"  Last Updated: {item.LastUpdateDate}");
+                Console.WriteLine();
+
             }
         }
 

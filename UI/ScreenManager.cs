@@ -51,7 +51,6 @@ namespace Blog.UI
 
             foreach (var prop in type.GetProperties())
             {
-                // Ignorar propriedades com o atributo IgnoreProperty
                 if (Attribute.IsDefined(prop, typeof(IgnorePropertyAttribute)))
                     continue;
 
