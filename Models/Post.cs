@@ -1,6 +1,6 @@
 ﻿using Blog.Attributes;
 using Blog.Repositories.Interfaces;
-using System.ComponentModel.DataAnnotations.Schema;
+using Dapper.Contrib.Extensions;
 
 namespace Blog.Models
 {
@@ -19,5 +19,8 @@ namespace Blog.Models
         public string Slug { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime LastUpdateDate { get; set; }
+        [IgnoreProperty]
+        [Write(false)]
+        public Category Category { get; set; }
     }
 }

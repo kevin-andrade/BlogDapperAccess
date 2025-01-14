@@ -29,8 +29,9 @@ namespace Blog
             //ReadCategory(connection);
             //ReadCategoryWithPostsCount(connection);
             //ReadTagsWithPostCount(connection);
-            var categoryId = ScreenManager.GetIdModel<Category>("Category");
-            ReadCategoryWithPosts(connection, categoryId);
+            ReadPostsWithCategory(connection);
+            //var categoryId = ScreenManager.GetIdModel<Category>("Category");
+            //ReadCategoryWithPosts(connection, categoryId);
             //ReadTag(connection);
             //ReadItemId(connection);
             //CreateUser(connection);
@@ -171,6 +172,17 @@ namespace Blog
             foreach (var tag in tags)
             {
                 Console.WriteLine($"{tag.Name} | Post Count: {tag.PostCount}");
+            }
+        }
+
+        public static void ReadPostsWithCategory(SqlConnection connection)
+        {
+            var repository = new PostRepository(connection);
+            var posts = repository.GetPostsWithCategory();
+
+            foreach (var post in posts)
+            {
+                Console.WriteLine($"Post: {post.Title} | Category: {post.Category.Name}");
             }
         }
 
