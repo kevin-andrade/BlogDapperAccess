@@ -1,4 +1,5 @@
-﻿using Blog.Models;
+﻿using Azure.Core;
+using Blog.Models;
 using Blog.Repositories;
 using Blog.Repositories.Interfaces;
 using Blog.UI;
@@ -29,7 +30,8 @@ namespace Blog
             //ReadCategory(connection);
             //ReadCategoryWithPostsCount(connection);
             //ReadTagsWithPostCount(connection);
-            ReadPostsWithCategory(connection);
+            //ReadPostsWithCategory(connection);
+            ReadPostsWithTags(connection);
             //var categoryId = ScreenManager.GetIdModel<Category>("Category");
             //ReadCategoryWithPosts(connection, categoryId);
             //ReadTag(connection);
@@ -184,6 +186,26 @@ namespace Blog
             {
                 Console.WriteLine($"Post: {post.Title} | Category: {post.Category.Name}");
             }
+        }
+
+        public static void ReadPostsWithTags(SqlConnection connection)
+        {
+            var repository = new PostRepository(connection);
+            var tags = repository.GetPostsWithTags();
+
+            foreach (var post in tags)
+            {
+                var formattedTags = FormatTags(post.Tags);
+                Console.WriteLine($"Post: {post.Title} | Tags: {formattedTags}");
+            }
+        }
+
+        public static string FormatTags(List<Tag> tags)
+        {
+            if (tags == null || tags.Count == 0)
+                return "No tags";
+
+            return string.Join(", ", tags.Select(tag => tag.Name));
         }
 
         public static void ReadCategory(SqlConnection connection)
