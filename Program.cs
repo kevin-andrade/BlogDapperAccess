@@ -2,7 +2,6 @@
 using Blog.Repositories;
 using Blog.UI;
 using Blog.UI.Screens;
-using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
@@ -28,6 +27,8 @@ namespace Blog
             ScreenManager.Pause();
 
             Database.Connection.Close();
+
+            //UNCONMENT TO TEST
 
             //ReadRoles(connection);
             //ReadUsersWithRoles(connection);
@@ -75,7 +76,6 @@ namespace Blog
             //var postTag = ScreenManager.GetPostLinkTagData();
             //var postTagRepository = new JoinRepository<int, int, PostTag>(connection, "PostTag", "PostId", "TagId");
             //postTagRepository.CreateRelation(postTag.PostId, postTag.TagId);
-
         }
 
         public static void ReadUsersWithRoles(SqlConnection connection)
