@@ -61,13 +61,24 @@ namespace Blog.UI
 
                     if (prop.PropertyType == typeof(string))
                     {
-                        prop.SetValue(model, value);
+                        if (!string.IsNullOrWhiteSpace(value))
+                        {
+                            prop.SetValue(model, value);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{prop.Name} cannot be empty.");
+                        }
                     }
                     else if (prop.PropertyType == typeof(int))
                     {
                         if (int.TryParse(value, out var intValue))
                         {
                             prop.SetValue(model, intValue);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Invalid input for {prop.Name}. Please enter a valid integer.");
                         }
                     }
                     else if (prop.PropertyType == typeof(DateTime))
@@ -76,12 +87,17 @@ namespace Blog.UI
                         {
                             prop.SetValue(model, dateValue);
                         }
+                        else
+                        {
+                            Console.WriteLine($"Invalid input for {prop.Name}. Please enter a valid date.");
+                        }
                     }
                 }
             }
 
             return model;
         }
+
 
 
         public static User GetUserDate()

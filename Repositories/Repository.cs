@@ -2,8 +2,6 @@
 using Blog.Repositories.Interfaces;
 using Dapper.Contrib.Extensions;
 using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
 
 namespace Blog.Repositories
 {
@@ -22,8 +20,15 @@ namespace Blog.Repositories
 
         public void Create(TModel model)
         {
-            _connection.Insert(model);
-            Console.WriteLine($"Created successfully!");
+            try
+            {
+                _connection.Insert(model);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error inserting entity: {ex.Message}");
+                throw;
+            }
         }
 
         public void Update(TModel model)
