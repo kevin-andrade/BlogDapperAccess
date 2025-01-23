@@ -1,16 +1,16 @@
-﻿namespace Blog.UI.Screens.UserScreens
+﻿namespace Blog.UI.Screens.PostScreens
 {
-    public class MenuUserScreen
+    public class MenuPostScreen
     {
         public static void Load()
         {
             Console.Clear();
-            Console.WriteLine("== User Manager ==");
-            Console.WriteLine("1. Add User");
-            Console.WriteLine("2. Update User");
-            Console.WriteLine("3. Delete User");
-            Console.WriteLine("4. List Users");
-            Console.WriteLine("5. List Users with Roles");
+            Console.WriteLine("== Post Manager ==");
+            Console.WriteLine("1. Add Post");
+            Console.WriteLine("2. Update Post");
+            Console.WriteLine("3. Delete Post");
+            Console.WriteLine("4. List Posts with Category");
+            Console.WriteLine("5. List Posts with Tags");
             Console.WriteLine("6. Exit");
             Console.WriteLine();
             Console.Write("Choose an option: ");
@@ -19,20 +19,19 @@
             switch (choice)
             {
                 case "1":
-                    CreateUserScreen.Load();
+                    CreatePostScreen.Load();
                     break;
                 case "2":
-                    UpdateUserScreen.Load();
+                    UpdatePostScreen.Load();
                     break;
                 case "3":
-                    DeleteUserScreen.Load();
+                    DeletePostScreen.Load();
                     break;
                 case "4":
-                    ListUserScreen.Load();
+                    ListPostsWithCategoryScreen.Load();
                     break;
                 case "5":
-                    UsersWithRolesScreen.Load();
-                    break;
+                    ListPostsWithTagsScreen.Load(); break;
                 case "6":
                     return;
                 default:

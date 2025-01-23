@@ -22,6 +22,7 @@ namespace Blog.Models
         [IgnoreProperty]
         [Write(false)]
         public Category Category { get; set; }
+        [IgnoreProperty]
         public List<Tag> Tags { get; set; }
     }
 }

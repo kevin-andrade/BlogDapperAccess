@@ -1,4 +1,9 @@
-﻿using Blog.UI.Screens.UserScreens;
+﻿using Blog.UI.Screens.CategoryScreens;
+using Blog.UI.Screens.LinksScreens;
+using Blog.UI.Screens.PostScreens;
+using Blog.UI.Screens.RoleScreens;
+using Blog.UI.Screens.TagScreens;
+using Blog.UI.Screens.UserScreens;
 
 namespace Blog.UI.Screens
 {
@@ -15,10 +20,10 @@ namespace Blog.UI.Screens
             Console.WriteLine("2 - Profile management");
             Console.WriteLine("3 - Category management");
             Console.WriteLine("4 - Tag managemennt");
-            Console.WriteLine("5 - Link role/user");
-            Console.WriteLine("6 - Link post/tag");
-            Console.WriteLine("7 - Reports");
-            Console.WriteLine();
+            Console.WriteLine("5 - Post managemennt");
+            Console.WriteLine("6 - Link role/user");
+            Console.WriteLine("7 - Link post/tag");
+            Console.WriteLine("8 - Reports");
             Console.WriteLine();
             var option = short.Parse(Console.ReadLine()!);
 
@@ -28,9 +33,17 @@ namespace Blog.UI.Screens
                     MenuUserScreen.Load();
                     break;
                 case 2:
-                case 4:
-                    //MenuTagScreen.Load();
+                    MenuRoleScreen.Load();
                     break;
+                case 3:
+                    MenuCategoryScreen.Load();
+                    break;
+                case 4:
+                    MenuTagScreen.Load();
+                    break;
+                case 5: MenuPostScreen.Load(); break;
+                case 6: RoleToUserScreen.Load(); break;
+                case 7: PostToTagScreen.Load(); break;
                 default: Load(); break;
             }
         }
